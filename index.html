@@ -451,7 +451,13 @@ function switchTab(id) {
     document.querySelectorAll('.tab-btn')[i].classList.toggle('active', t===id);
     document.getElementById('panel-'+t).classList.toggle('active', t===id);
   });
-  if (id==='fc' && !fcFreqChart) { calcFc(); }
+  if (id==='fc') {
+    setTimeout(function() {
+      if (fcFreqChart) fcFreqChart.resize();
+      if (fcTimeChart) fcTimeChart.resize();
+      calcFc();
+    }, 50);
+  }
 }
 
 // ============================================================
@@ -749,6 +755,7 @@ function updateFcTimeChart(leq,age) {
 document.addEventListener('DOMContentLoaded', function() {
   startSimLoop();
   calcRisk();
+  calcFc();
 });
 </script>
 </body>
